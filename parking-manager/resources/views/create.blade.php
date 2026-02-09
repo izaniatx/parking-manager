@@ -3,33 +3,64 @@
 @section('contenido')
     <h2 class="mb-4">Registrar entrada de vehículo</h2>
 
+    @if ($errors->any())
+        <div style="color:red">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('coches.store') }}" method="POST">
         @csrf
 
-        <select name="user_id" id="user_id">
-            <option value="">Selecciona un usuario</option>
-            @foreach($users as $user)
-                <option value="{{ $user->user_id }}">{{ $user->name }} {{ $user->lastName }}</option>
-            @endforeach
-        </select>
+        <div>
+            <label>
+                <input type="radio" name="user_mode" value="existing" checked>
+                Usuario existente
+            </label>
 
-        <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
-            @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            <label>
+                <input type="radio" name="user_mode" value="new">
+                Nuevo usuario
+            </label>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Apellido</label>
-            <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror" value="{{ old('lastName') }}">
-            @error('lastName') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        <div id="existing-user">
+            <label>Usuario</label>
+            <select name="user_id">
+                <option value="">Seleccione un usuario</option>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }} ({{ $user->email }})
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Correo</label>
-            <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
-            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        <div id="new-user" style="display:none">
+
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+                @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Apellido</label>
+                <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror" value="{{ old('lastName') }}">
+                @error('lastName') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+                @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
         </div>
+
 
         <div class="mb-3">
             <label class="form-label">Matrícula</label>
@@ -51,4 +82,17 @@
 
         <button type="submit" class="btn btn-primary w-100">Guardar Coche</button>
     </form>
+
+    <script>
+        document.querySelectorAll('input[name="user_mode"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('existing-user').style.display =
+                    this.value === 'existing' ? 'block' : 'none';
+
+                document.getElementById('new-user').style.display =
+                    this.value === 'new' ? 'block' : 'none';
+            });
+        });
+    </script>
+
 @endsection

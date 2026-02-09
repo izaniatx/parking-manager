@@ -12,6 +12,7 @@
                 <th>Matrícula</th>
                 <th>Marca</th>
                 <th>Modelo</th>
+                <th>Dueño</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>

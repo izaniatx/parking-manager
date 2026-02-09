@@ -12,6 +12,7 @@ class Coche extends Model
         'matricula',
         'marca',
         'modelo',
+        'user_id',
     ];
 
     public function user()

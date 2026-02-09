@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Coche;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -10,15 +11,44 @@ class CocheController extends Controller
 
     public function store(Request $request)
     {
-        $nuevoCoche = new Coche();
-        $nuevoCoche->matricula = $request->input('matricula');
-        $nuevoCoche->marca = $request->input('marca');
-        $nuevoCoche->modelo = $request->input('modelo');
-            $nuevoCoche->user_id = $request->input('user_id');
-        $nuevoCoche->save();
+        $request->validate([
+            'user_mode' => 'required|in:existing,new',
+            'matricula' => 'required|string|max:20',
+            'marca' => 'required|string|max:50',
+            'modelo' => 'required|string|max:50',
+        ]);
 
-        return redirect()->route('coches.index')->with('success', 'Coche añadido correctamente.');
+        if ($request->user_mode === 'existing') {
+            $request->validate([
+                'user_id' => 'required|exists:users,id',
+            ]);
+            $user = User::find($request->user_id);
+        }
+
+        if ($request->user_mode === 'new') {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'lastName' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+            ]);
+            $user = User::create([
+                'name' => $request->name,
+                'lastName' => $request->lastName,
+                'email' => $request->email,
+            ]);
+        }
+
+        Coche::create([
+            'matricula' => $request->matricula,
+            'marca' => $request->marca,
+            'modelo' => $request->modelo,
+            'user_id' => $user->id,
+        ]);
+
+        return redirect()->route('coches.index')->with('success', 'Coche creado correctamente');
     }
+
+
 
     public function destroy($id)
     {
