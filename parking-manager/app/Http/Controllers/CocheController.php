@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CocheController extends Controller
 {
-    public function index()
-    {
-        $coches = Coche::all();
-        return view('coches.index', compact('coches'));
-    }
 
     public function store(Request $request)
     {
@@ -30,5 +25,24 @@ class CocheController extends Controller
         $coche->delete();
 
         return redirect()->route('coches.index')->with('success', 'Coche eliminado correctamente.');
+    }
+
+    public function create() 
+    {
+    return view('create');
+    }
+
+    public function index() 
+    {
+        $coches = Coche::all();
+        return view('lista', compact('coches'));
+    }
+
+    public function buscar(Request $request) 
+    {
+        $matricula = $request->input('matricula');
+        $coches = Coche::where('matricula', 'LIKE', "%$matricula%")->get();
+        
+        return view('buscar', compact('coches'));
     }
 }
