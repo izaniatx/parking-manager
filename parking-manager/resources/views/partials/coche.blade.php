@@ -1,13 +1,14 @@
-
 <tr>
-    <td>{{ $coche->matricula }}</td>
-    <td>{{ $coche->marca }}</td>
-    <td>{{ $coche->modelo }}</td>
-    <td>
-        <form action="{{ route('coches.destroy', $coche->id) }}" method="POST">
+    <td class="align-middle fw-bold">{{ $coche->matricula }}</td>
+    <td class="align-middle">{{ $coche->marca }}</td>
+    <td class="align-middle">{{ $coche->modelo }}</td>
+    <td class="text-center">
+        <form action="{{ route('coches.destroy', $coche->id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres borrarlo?')">
             @csrf
             @method('DELETE')
-            <button type="submit">Borrar</button>
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+                Borrar
+            </button>
         </form>
     </td>
 </tr>

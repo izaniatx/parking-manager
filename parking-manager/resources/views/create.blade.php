@@ -1,41 +1,29 @@
 @extends('layouts.app')
 
 @section('contenido')
-    <h1>Añadir un Nuevo Coche</h1>
+    <h2 class="mb-4">Registrar entrada de vehículo</h2>
 
     <form action="{{ route('coches.store') }}" method="POST">
-        @csrf 
+        @csrf
 
-        <div>
-            <label>Matrícula:</label><br>
-            <input type="text" name="matricula" value="{{ old('matricula') }}">
-            @error('matricula')
-                <p style="color: red;">{{ $message }}</p>
-            @enderror
+        <div class="mb-3">
+            <label class="form-label">Matrícula</label>
+            <input type="text" name="matricula" class="form-control @error('matricula') is-invalid @enderror" value="{{ old('matricula') }}">
+            @error('matricula') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        <br>
-
-        <div>
-            <label>Marca:</label><br>
-            <input type="text" name="marca" value="{{ old('marca') }}">
-            @error('marca')
-                <p style="color: red;">{{ $message }}</p>
-            @enderror
+        <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <input type="text" name="marca" class="form-control @error('marca') is-invalid @enderror" value="{{ old('marca') }}">
+            @error('marca') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        <br>
-
-        <div>
-            <label>Modelo:</label><br>
-            <input type="text" name="modelo" value="{{ old('modelo') }}">
-            @error('modelo')
-                <p style="color: red;">{{ $message }}</p>
-            @enderror
+        <div class="mb-3">
+            <label class="form-label">Modelo</label>
+            <input type="text" name="modelo" class="form-control @error('modelo') is-invalid @enderror" value="{{ old('modelo') }}">
+            @error('modelo') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        <br>
-
-        <button type="submit">Registrar Coche</button>
+        <button type="submit" class="btn btn-primary w-100">Guardar Coche</button>
     </form>
 @endsection

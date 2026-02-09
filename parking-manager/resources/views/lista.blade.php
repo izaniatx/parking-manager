@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
 @section('contenido')
-    <h1>Listado de Aparcamiento</h1>
-    <table border="1">
-        <thead>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Vehículos en el Parking</h2>
+        <a href="{{ route('coches.create') }}" class="btn btn-success btn-sm">+ Añadir Coche</a>
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
             <tr>
                 <th>Matrícula</th>
                 <th>Marca</th>
                 <th>Modelo</th>
-                <th>Acciones</th>
+                <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {{-- 
-               @each(VISTA, COLECCIÓN, VARIABLE_INDIVIDUAL, VISTA_VACÍA_OPCIONAL) 
-            --}}
             @each('partials.coche', $coches, 'coche')
         </tbody>
     </table>
