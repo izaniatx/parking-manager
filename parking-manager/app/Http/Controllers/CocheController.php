@@ -14,6 +14,7 @@ class CocheController extends Controller
         $nuevoCoche->matricula = $request->input('matricula');
         $nuevoCoche->marca = $request->input('marca');
         $nuevoCoche->modelo = $request->input('modelo');
+            $nuevoCoche->user_id = $request->input('user_id');
         $nuevoCoche->save();
 
         return redirect()->route('coches.index')->with('success', 'Coche añadido correctamente.');

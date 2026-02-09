@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('matricula')->unique();
             $table->string('marca');
             $table->string('modelo');
+            $table->uuid('user_id');
             $table->timestamps();
+                $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 

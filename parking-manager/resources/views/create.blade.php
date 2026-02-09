@@ -9,7 +9,7 @@
         <select name="user_id" id="user_id">
             <option value="">Selecciona un usuario</option>
             @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->lastName }}</option>
+                <option value="{{ $user->user_id }}">{{ $user->name }} {{ $user->lastName }}</option>
             @endforeach
         </select>
 
@@ -17,6 +17,18 @@
             <label class="form-label">Nombre</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Apellido</label>
+            <input type="text" name="lastName" class="form-control @error('lastName') is-invalid @enderror" value="{{ old('lastName') }}">
+            @error('lastName') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
