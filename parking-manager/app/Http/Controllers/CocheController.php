@@ -29,7 +29,8 @@ class CocheController extends Controller
 
     public function create() 
     {
-    return view('create');
+        $users = \App\Models\User::all();
+        return view('create', compact('users'));
     }
 
     public function index() 
@@ -45,4 +46,6 @@ class CocheController extends Controller
         
         return view('buscar', compact('coches'));
     }
+
+
 }

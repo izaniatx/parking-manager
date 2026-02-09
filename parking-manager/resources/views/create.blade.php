@@ -6,6 +6,19 @@
     <form action="{{ route('coches.store') }}" method="POST">
         @csrf
 
+        <select name="user_id" id="user_id">
+            <option value="">Selecciona un usuario</option>
+            @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->lastName }}</option>
+            @endforeach
+        </select>
+
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+            @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+        </div>
+
         <div class="mb-3">
             <label class="form-label">Matrícula</label>
             <input type="text" name="matricula" class="form-control @error('matricula') is-invalid @enderror" value="{{ old('matricula') }}">
